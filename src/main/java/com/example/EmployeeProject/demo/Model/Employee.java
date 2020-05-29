@@ -1,5 +1,7 @@
 package com.example.EmployeeProject.demo.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -48,12 +50,18 @@ public class Employee {
         this.salary = salary;
     }
 
-    public Employee(Long id, @NotNull String firstName, @NotNull String lastName, @NotNull  String email, @NotNull Double salary) {
+    public Employee(Long id, @NotNull String firstName, @NotNull String lastName, @NotNull  String email, @NotNull Double salary, Department department) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.salary = salary;
+        this.department = department;
+
+    }
+    public Employee()
+    {
+
     }
 
 
@@ -61,16 +69,32 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+
     private String firstName;
-    @NotNull
+
+
+
+
     private String lastName;
 
-    @NotNull
+
     private String email;
 
-    @NotNull
+
     private Double salary;
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    @ManyToOne
+   @JsonIgnore
+   @JoinColumn(name = "department_id", nullable = false)
+   private Department department;
 
 
 
